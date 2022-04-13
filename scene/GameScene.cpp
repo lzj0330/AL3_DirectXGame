@@ -6,8 +6,7 @@ using namespace DirectX;
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() { 
-	delete sprite_; 
+GameScene::~GameScene() {  
 	delete model_;
 }
 
@@ -19,43 +18,21 @@ void GameScene::Initialize() {
 	debugText_ = DebugText::GetInstance();
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
-	//スプライトの生成
-	sprite_ = Sprite::Create(textureHandle_, {100, 50});
+
+	// 3D xyz
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};//xtz倍率
+	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f}; // xyz旋转
+	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};//xyz平行移动
 
 	//3D
 	model_ = Model::Create();
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
-	//music
-	soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
-	audio_->PlayWave(soundDataHandle_);
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 }
 
 void GameScene::Update() {
-	XMFLOAT2 position = sprite_->GetPosition();
-	position.x += 2.0f;
-	position.y += 1.0f;
-	sprite_->SetPosition(position);
 	
-	//music
-	if (input_->TriggerKey(DIK_SPACE)) {
-		audio_->StopWave(voiceHandle_);
-	}
-	//debug
-	//debugText_->Print("kaizokuou ni oreha naru.", 50, 50, 1.0f);
-	// 書式
-	//debugText_->SetPos(50, 50);
-	//debugText_->Printf("year:%d", 2001);
-
-	//変数の値をインクリメント
-	value_++;
-	//
-	std::string strDebug = std::string("Value:") + 
-	std::to_string(value_);
-	//
-	debugText_->Print(strDebug, 50, 50, 1.0f);
 }
 
 void GameScene::Draw() {
@@ -85,7 +62,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	//3Dモデル描画
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -98,7 +75,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
