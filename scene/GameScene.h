@@ -58,9 +58,11 @@ class GameScene {
 	//3D
 	Model* model_ = nullptr;
 
-	WorldTransform worldTransform_;
+	WorldTransform worldTransform_[100];
 	ViewProjection viewProjection_;
 
+	//カメラ上方向の角度
+	float viewAngle = 0.0f;
 
 	//値を表示したい変数
 	int32_t Hennsuu = 0;
