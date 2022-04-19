@@ -21,7 +21,7 @@ void GameScene::Initialize() {
 
 	// 3D xyz
 	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};//xtz倍率
-	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f}; // xyz旋转
+	worldTransform_.rotation_ = {XMConvertToRadians(45.0f), XMConvertToRadians(45.0f), 0.0f}; // xyz旋转
 	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};//xyz平行移动
 
 	//3D
@@ -31,8 +31,26 @@ void GameScene::Initialize() {
 
 }
 
-void GameScene::Update() {
-	
+void GameScene::Update() { 
+
+	debugText_->SetPos(50, 70);
+	debugText_->Printf("translation:(%f,%f,%f)",
+		worldTransform_.translation_.x,
+		worldTransform_.translation_.y,
+	  worldTransform_.translation_.z);
+
+	debugText_->SetPos(50, 90);
+	debugText_->Printf("rotation:(%f,%f,%f)", 
+		worldTransform_.rotation_.x,
+		worldTransform_.rotation_.y,
+	  worldTransform_.rotation_.z);
+
+	debugText_->SetPos(50, 110);
+	debugText_->Printf("scale:(%f,%f,%f)",
+		worldTransform_.scale_.x,
+		worldTransform_.scale_.y,
+	  worldTransform_.scale_.z);
+
 }
 
 void GameScene::Draw() {
@@ -62,7 +80,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	//3Dモデル描画
-	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
