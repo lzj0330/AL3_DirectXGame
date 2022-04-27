@@ -67,4 +67,17 @@ class GameScene {
 	//値を表示したい変数
 	int32_t Hennsuu = 0;
 
+	public:
+		//
+	  enum PartId { 
+		  Root,
+		  Spine,
+		  Chest,
+		  Head,
+		  ArmL,
+		  ArmR,
+		  Hip,
+		  LegL,
+		  LegR,
+		};
 };
